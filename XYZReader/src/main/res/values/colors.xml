@@ -16,10 +16,15 @@
 -->
 
 <resources>
-    <color name="photo_placeholder">#ccc</color>
 
-    <color name="theme_primary">#04561A</color>
-    <color name="theme_primary_dark">#04561A</color>
-    <color name="theme_accent">#04561A</color>
+    <!-- Color Palette -->
+    <color name="purple_300">#9c31d1</color>
+    <color name="purple_500">#8506c4</color>
+    <color name="purple_700">#660596</color>
+    <color name="green_a200">#8AB200</color>
+
+    <!-- Theme specific palette -->
+    <color name="photo_placeholder">#ccc</color>
     <color name="ltgray">#ffe0e0e0</color>
+
 </resources>
