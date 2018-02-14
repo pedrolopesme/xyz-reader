@@ -23,8 +23,11 @@
     <color name="purple_700">#660596</color>
     <color name="green_a200">#8AB200</color>
 
+    <!-- Text specific palette -->
+    <color name="title">#000000</color>
+    <color name="description">#666666</color>
+
     <!-- Theme specific palette -->
     <color name="photo_placeholder">#ccc</color>
-    <color name="ltgray">#ffe0e0e0</color>
 
 </resources>
