@@ -11,10 +11,12 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
@@ -89,7 +91,10 @@ public class ArticleDetailFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
+
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
+
+
         mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,8 +105,33 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
+        addDynamicPaddingToToolbar();
         bindViews();
         return mRootView;
+    }
+
+    private void addDynamicPaddingToToolbar() {
+        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) mRootView.findViewById(R.id.article_title);
+        AppBarLayout appBarLayout = (AppBarLayout) mRootView.findViewById(R.id.app_bar_articledetail);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = true;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbarLayout.setPadding(100, 0, 100, 0);
+                    isShow = true;
+                } else if (isShow) {
+                    collapsingToolbarLayout.setPadding(0, 0, 0, 0);
+                    isShow = false;
+                }
+            }
+        });
+
     }
 
     private void bindViews() {
@@ -109,7 +139,7 @@ public class ArticleDetailFragment extends Fragment implements
             return;
         }
 
-        CollapsingToolbarLayout titleView = (CollapsingToolbarLayout) mRootView.findViewById(R.id.article_title);
+        CollapsingToolbarLayout toolBar = (CollapsingToolbarLayout) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
@@ -118,8 +148,7 @@ public class ArticleDetailFragment extends Fragment implements
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
-            titleView.setTitle(mCursor.getString(ArticleLoader.Query.TITLE));
-
+            toolBar.setTitle(mCursor.getString(ArticleLoader.Query.TITLE));
 
             bylineView.setText(Html.fromHtml(
                     DateUtils.getRelativeTimeSpanString(
@@ -151,8 +180,8 @@ public class ArticleDetailFragment extends Fragment implements
                     });
         } else {
             mRootView.setVisibility(View.GONE);
-            titleView.setTitle("N/A");
-            bylineView.setText("N/A" );
+            toolBar.setTitle("N/A");
+            bylineView.setText("N/A");
             bodyView.setText("N/A");
         }
     }
