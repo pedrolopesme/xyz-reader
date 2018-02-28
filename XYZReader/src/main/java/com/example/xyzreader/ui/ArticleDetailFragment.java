@@ -158,7 +158,25 @@ public class ArticleDetailFragment extends Fragment implements
                             + " by <font color='#ffffff'>"
                             + mCursor.getString(ArticleLoader.Query.AUTHOR)
                             + "</font>"));
-            bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
+
+
+            String bodyText = mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />");
+            bodyText = bodyText.substring(0, (bodyText.length() <= 300 ? bodyText.length() : 300));
+            bodyView.setText(Html.fromHtml(bodyText));
+
+            TextView seeMore = (TextView) mRootView.findViewById(R.id.article_see_more);
+            seeMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String bodyText = mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />");
+                    TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
+                    bodyView.setText(Html.fromHtml(bodyText));
+                    view.setVisibility(View.GONE);
+                }
+            });
+
+
+//            bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
                         @Override

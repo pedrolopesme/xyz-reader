@@ -88,18 +88,31 @@
                 android:textColorLink="@color/green_a200"
                 android:textSize="@dimen/detail_body_text_size" />
 
+            <TextView
+                android:id="@+id/article_see_more"
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/detail_inner_horiz_margin"
+                android:layout_marginRight="@dimen/detail_inner_horiz_margin"
+                android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
+                android:paddingBottom="@dimen/detail_body_bottom_margin"
+                android:text="@string/see_more"
+                android:textColor="@color/purple_700"
+                android:textColorLink="@color/green_a200"
+                android:textSize="@dimen/detail_body_text_size" />
+
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
-    <ImageButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/share_fab"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
-        android:background="@drawable/add_fab_background"
         android:contentDescription="@string/action_share"
         android:elevation="@dimen/fab_elevation"
         android:src="@drawable/ic_share"
