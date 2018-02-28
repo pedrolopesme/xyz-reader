@@ -10,5 +10,6 @@
     <string name="up">Up</string>
     <string name="connected">Good! Connected to Internet</string>
     <string name="no_connection">Sorry! Not connected to internet</string>
+    <string name="see_more">See More</string>
 
 </resources>
