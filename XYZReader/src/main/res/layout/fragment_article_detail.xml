@@ -99,7 +99,6 @@
                 android:paddingBottom="@dimen/detail_body_bottom_margin"
                 android:text="@string/see_more"
                 android:textColor="@color/purple_700"
-                android:textColorLink="@color/green_a200"
                 android:textSize="@dimen/detail_body_text_size" />
 
         </LinearLayout>

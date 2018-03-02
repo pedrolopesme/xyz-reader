@@ -14,7 +14,9 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -107,6 +109,7 @@ public class ArticleDetailFragment extends Fragment implements
 
         addDynamicPaddingToToolbar();
         bindViews();
+        makeItFABulous();
         return mRootView;
     }
 
@@ -132,6 +135,36 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
+    }
+
+    private void makeItFABulous() {
+        NestedScrollView scroller = (NestedScrollView) mRootView.findViewById(R.id.scrollview_article);
+
+        if (scroller != null) {
+
+            scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.share_fab);
+
+                    if (scrollY > oldScrollY) {
+                        fab.hide();
+                    }
+                    if (scrollY < oldScrollY) {
+                        fab.hide();
+                    }
+
+                    if (scrollY == 0) {
+                        fab.show();
+                    }
+
+                    if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                        fab.show();
+                    }
+
+                }
+            });
+        }
     }
 
     private void bindViews() {
@@ -175,8 +208,6 @@ public class ArticleDetailFragment extends Fragment implements
                 }
             });
 
-
-//            bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
                         @Override
